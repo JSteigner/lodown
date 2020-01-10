@@ -59,7 +59,7 @@ var _ = {};
  module.exports.typeOf = typeOf;
 
 /** first: Returns the first number of elements corresponding to input number.
- *         If 'num' is greater than array length or not a number return an empty array.
+ *         If 'num' is greater than array length return the array. If 'num' is negative or not a number return an empty array.
  * 
  * @param {Array} array: The collection over which to iterate. Input as an arugment. Array may or may not have a value or even exist.
  * @param {Number}: num: Input as an argument. The number may have any numeric value.
@@ -89,12 +89,9 @@ var _ = {};
  *
  * @param {Array}: array: Input as an argument. Array may or may not have a value or even exist.
  * @param {Number}: num: Input as an argument. The number may have any numeric value, may not be given or NaN.
- *
- * @edgeCase: If number is negative an empty array is returned. If the number is greater than the array,
- *            the array is returned.
  * 
  * @return {Array}: arrResult:  If input array is not an array or if input number
- *                   is greater than the array length an empty array will be returned.
+ *                   If 'num' is greater than the array length the whole array will be returned.
  *                   If number is not given or not a number, it will return the last element in the 
  *                   array. Otherwise the last supplied number of elements will be returned.
  */
@@ -123,7 +120,7 @@ module.exports.last = last;
  *           If value does not occur in the array then -1 will be returned.
  * 
  * @param {Array}: array: The collection over which to iterate. Input as an arguement.
- * @param {Value}: value: Input as an argument.
+ * @param {string}: value: Input as an argument.
  * 
  * @return {Number}: Returns the index of the matched value in the array. If the
  *                   value is not in the array, -1 will be returned.
@@ -144,8 +141,8 @@ module.exports.last = last;
  * @param {Array}: array: The collection over which to iterate. Input as an argument.
  * @param {any Value}: value : Input as an argument. The value to look for in the array. 
  *
- * @return {Boolean}: true -  If the array contains a value, returns a boolean value of true.
- * @return {Boolean}: false - If the array doesn't contain a value, returns a boolean value of false.
+ * @return {Boolean}: If the array contains a value, returns a boolean value of true.  If 
+ *                    the array doesn't contain a value, returns a boolean value of false.
  */
  // return values are booleans
  function contains(array, value) {
@@ -179,7 +176,7 @@ module.exports.last = last;
  *
  * @param {Array} array: Input as argument.
  *
- * @return{Array}: Returns a collection with elements that were pushed in having no duplicates.
+ * @return {Array}: Returns a collection with elements that were pushed in having no duplicates.
  */
   function unique(array) {
       return array.filter((a, b) => array.indexOf(a) === b);
@@ -191,13 +188,13 @@ module.exports.last = last;
  * 
  * @param {Array} array: The collection over which to iterate. Input as an argument
  * @param {Function} test: The Function to be applied to each value in the collection. Input as argument.
- *                          It take three parameters: element, index, and collection.
+ *                          It takes three parameters: element, index, and collection.
  * 
  * @return {Array}: myArray: An array will be returned with only the values that past the test (returned true)
  */
  function filter (array, test){
      var myArray = [];
-     _.each(array, function(element, index, array){
+     each(array, function(element, index, array){
          if(test(element, index, array)){
              myArray.push(element);
          }
@@ -219,7 +216,7 @@ module.exports.last = last;
  */
  function reject (array, test){
     let newArray = [];
-    _.filter(array, function(element, index, array) {
+    filter(array, function(element, index, array) {
         if(!test(element, index, array)){
             newArray.push(element);
         }
@@ -229,18 +226,18 @@ module.exports.last = last;
  module.exports.reject = reject;
 
 /** partition: Partition creates an array of elements split into two groups, an array of arrays.
- *
+ *             One array contains all of the truthy values, the other contains all of the falsey values.
+ *                            
  * @param {Array} array: The collection over which to iterate. Input as as argument.
  * @param {function} test: The Function to be applied to each value in the collection. Input as an argument.
  *
  * @return {Array}: newArray:  An array will be returned that is made up of two sub arrays.
  *                             One array contains all of the truthy values, the other contains
  *                             all of the falsey values.
- *
  */
  function partition(array, test){
     var newArray = [];
-    if (_.filter(array,test)){
+    if (filter(array,test)){
         newArray.push(_.filter(array,test));
         newArray.push(_.reject(array,test));
     }
@@ -260,23 +257,25 @@ module.exports.last = last;
  function map (collection, test){
     
     let newArray = [];
-    _.each(collection, function(value, index, collection){
+    each(collection, function(value, index, collection){
         newArray.push(test(value, index, collection));
     });
     return newArray;
 }
  module.exports.map = map;
 
-/** pluck: Pluck is used to extract a list of property values from an array of objects.
+/** pluck: Pluck is used to scan over an array of objects, looking for a common input property,
+ *         and if the key exists it will push those corresponding values from all the matching objects
+ *         to a new array.
  *
  * @param {Array}: arrObj: The collection over which to iterate. An array of objects. Input as argument
- * @param:{property}: prop: Input as argument. The property to search for through the array of objects.
+ * @param {property}: prop: Input as argument. The property to search for through the array of objects.
  *
  * @return {Array}: newArray: An array will be returned that contains the property value of input 
  *                            property for every object in the array.
  */
  function pluck (arrObj, prop) {
-    return _.map(arrObj, function(value, index, collection){
+    return map(arrObj, function(value, index, collection){
         return value[prop];
     });
 }
@@ -292,13 +291,13 @@ module.exports.last = last;
  *                          It take three parameters for an array: element, index, and collection.
  *                          It take three parameters for an object: current value, current key, collection.
  * 
- * @return {Boolean}: true - Returns a boolean value of true if every element in the array is true
- * @return {Boolean}: false -  If just one of the elements returns false, return a boolean value of false
+ * @return {Boolean}:  Returns a boolean value of true if every element in the array is true.
+ *                     If just one of the elements returns false, return a boolean value of false.
  */
  //returns a boolean
  function every(collection,test){
     var newArray = [];
-     _.each(collection,function(element, index, collection){
+     each(collection,function(element, index, collection){
          if(typeof test !== "function"){
              if(!element){
             newArray.push(element);}
@@ -324,13 +323,13 @@ module.exports.last = last;
  *                           It take three parameters for an array: element, index, and collection.
  *                           It take three parameters for an object: current value, current key, collection.
  * 
- * @return {Boolean}: Returns a boolean value of true if element passes the test, otherwise it returns false.
+ * @return {Boolean}: Returns a boolean value of true if element passes the test, if no values result to true then returns false.
  *
  */
  //returns a boolean
  function some(collection,func){
     var newArray = [];
-     _.every(collection,function(element, index, collection){
+     every(collection,function(element, index, collection){
          if(typeof func !== "function"){
              if(element){
             newArray.push(element);}
@@ -349,11 +348,12 @@ module.exports.last = last;
 /** reduce: Reduces a collection to a value which is the result of running each element
  *          in collection through iteration. Each time the function is called, it is supplied
  *          the return value of the previous result. A 'seed' parameter is supplied which represents
- *          the starting value of iteration. If seed is undefined than iteration will start at index zero.
+ *          the initial value to use for first callback argument. If seed is undefined than initial value will
+ *          be the first element in array and then iteration will start from the first instead of the zero index.
  * 
  * @param {Array}: array: The collection over which to iterate. Input as argument.
  * @param {function}: test: The Function to be applied to each value in the collection. Input as argument.
- *                          It takes the parameters: previous result, element, index.
+ *                          It takes the parameters: previous result, current, index.
  * @param {Any Value}: seed: Input as argument. Seed is starting value of iteration.
  *
  * @return {Value}: Returns the value of the final function call.
@@ -375,7 +375,9 @@ module.exports.last = last;
 }
  module.exports.reduce = reduce;
 
-/** extend: Extend copies properties from one object to another object.
+/** extend: Extend copies properties to one target object from at least one other object. 
+ *          An indefinite number of objects can be used as arguments to copy to the first 
+ *          target object.
  *
  * @param: {Object}: obj1: The target object to be copied to. Input as argument.
  * @param: {Object}: obj2: The object to be copied from. Input as argument.
