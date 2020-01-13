@@ -23,11 +23,11 @@ function each(collection, test) {
 }
 module.exports.each = each;
 /**
- * identity: Identity returns the given value unaltered. 
+ * identity: The identity Function returns an input value unaltered. 
  * 
- * @param {Any Value} value: Can be any datatype
+ * @param {Any Value} value: This value can be any datatype.
  * 
- * @return {Any Value}: Same value as input, unaltered 
+ * @return {Any Value}: The same value as input will be returned unaltered. 
  */
  
  function identity(value){
@@ -41,11 +41,11 @@ module.exports.identity = identity;
 var _ = {};
 
 
-/** typeOf: Returns the data type of the input value as a string.
+/** typeOf: The typeOf Function will accept any data type input and return a string of that data type.
  *
- * @param: {Any data type} value : Input as an argument
+ * @param: {Any data type} value : Any data type can be input.
  *
- * @return {String} :  Will return a string of the data type of value.
+ * @return {String} :  The return value will be a string of the data type value.
  */    
    
  function typeOf(value){
@@ -54,46 +54,47 @@ var _ = {};
    }else if(value === null){
         return "null";
    }
-    return typeof anything;  
+    return typeof value;  
 }
  module.exports.typeOf = typeOf;
 
-/** first: Returns the first number of elements corresponding to input number.
- *         If 'num' is greater than array length return the array. If 'num' is negative or not a number return an empty array.
+/** first: The first Function will return the first number of elements that correspond to an input number.
+ *         If the input number is greater than the length of the array then the array will be returned. If the input number is 
+ *         negative or not a number then an empty array will be returned.
  * 
- * @param {Array} array: The collection over which to iterate. Input as an arugment. Array may or may not have a value or even exist.
- * @param {Number}: num: Input as an argument. The number may have any numeric value.
+ * @param {Array} array: An optional input array that will be scanned over. This Array may not exist or have a value.
+ * @param {Number}: firstNum: An input number that represents the first number of elements that will be returned.
  *
- * @return {Value}: emptyArrayResult:  The first number of elements in the array.
+ * @return {Value}: arrayResult:  The element values that correspond to the first input number from the beginning of array will be returned.
  */
- function first(array, num){
-    let emptyArrayResult = [];
-    if (isNaN(num) === true) {
+ function first(array, firstNum){
+    let arrayResult = [];
+    if (isNaN(firstNum) === true) {
         return array[0];
-    } if (num < 0) {
-        return emptyArrayResult;
+    } if (firstNum < 0) {
+        return arrayResult;
     } else if(Array.isArray(array) === false) {
-        return emptyArrayResult;
-    } else if( num > array.length) {
+        return arrayResult;
+    } else if(firstNum > array.length) {
         return array;
-    } for(let i = 0; i < num; i++) {
-            emptyArrayResult.push(array[i]);
-        }  return emptyArrayResult;
+    } for(let i = 0; i < firstNum; i++) {
+            arrayResult.push(array[i]);
+        }  return arrayResult;
 }
  module.exports.first = first;
 
-/** last: Gets the last number of elements of array. Designed to take two arguments - an array
- *        and a number - and evaluate existence of the arguments. If array is not an array, last
- *        returns an empty array. If array and number exist, the last number of elements of the array 
- *        is returned. If number is not given or is NaN, the last element of array is returned.
+/** last: The last Function will output the last number of elements of an array. It takes two parameters,
+ *        an array and a number representing the number of elements from the end of the array to return. An empty array 
+ *        will be returned if no array parameter is supplied. If no number is given or is NaN, then the last element of the array 
+ *        will be returned. If the input number is greater than the array length, the whole array will be returned.
  *
- * @param {Array}: array: Input as an argument. Array may or may not have a value or even exist.
- * @param {Number}: num: Input as an argument. The number may have any numeric value, may not be given or NaN.
+ * @param {Array}: array: An optional input array to iterate over. 
+ * @param {Number}: num:  The number parameter repesents the number of elements from the end of the array that will be returned.
+ *                        If the number is not given or is NaN, then the last element of array will be returned.
  * 
- * @return {Array}: arrResult:  If input array is not an array or if input number
- *                   If 'num' is greater than the array length the whole array will be returned.
- *                   If number is not given or not a number, it will return the last element in the 
- *                   array. Otherwise the last supplied number of elements will be returned.
+ * @return {Array}: arrResult:  If the input array is a different data type than an array or if the input number is not given then an 
+ *                   empty array will be returned. The whole input array will be returned if the input number is greater than the length of the array.
+ *                   If the input number is not given or it is not a number then the last element of the array will be returned.
  */
  function last(array, num) {
     let arrResult = [];
@@ -112,85 +113,86 @@ var _ = {};
 }
 module.exports.last = last;
 
-/** indexOf: Designed to take two arguments, an array and a value. Gets the index
- *           at which the first occurrence of value is found in array. The test is to loop
- *           over an array by using a for loop. When the loop is initiated, the index of
- *           the array that is the first occurence of value inside of the array will be returned.
- *           This method will return the first occurence of value so multiple occurences is not an issue.
- *           If value does not occur in the array then -1 will be returned.
+/** indexOf: The indexOf Function takes two parameters, an input array and a string value. It is designed to return the index of the first
+ *           occurrence of the input string value in the array. Multiple occurrences of the value is not an issue because this function returns
+ *           the index at the first occurrence. If the value does not exist in the array then -1 will be returned.
  * 
- * @param {Array}: array: The collection over which to iterate. Input as an arguement.
- * @param {string}: value: Input as an argument.
+ * @param {Array}: array: The input array that will be scanned over.
+ * @param {string}: strVal: A string value to look for in array.
  * 
- * @return {Number}: Returns the index of the matched value in the array. If the
- *                   value is not in the array, -1 will be returned.
+ * @return {Number}: The index of the first occurrence of the string value found in the array will be returned. If the string value is not found
+ *                   negative one will be returned.
+ *                   
  */
- function indexOf(array, value) {
+ function indexOf(array, strVal) {
     
      for(let i = 0; i < array.length; i++) {
-         if(array[i] === value) {
+         if(array[i] === strVal) {
              return i;
          }
      } return -1;
 }
  module.exports.idexOf = indexOf;
 
-/** contains: This function will test to see if an array contains an input value.
- *            If no value is given false is returned.
+/** contains: The contains Function will test to see if a value exists in an array. It returns true if the value does exist
+ *            and if not a value of false is returned. If no value is given then false will be returned.
  *
- * @param {Array}: array: The collection over which to iterate. Input as an argument.
- * @param {any Value}: value : Input as an argument. The value to look for in the array. 
+ * @param {Array}: array: An input array to scan over. 
+ * @param {any Value}: value : The value to search for in the input array. 
  *
- * @return {Boolean}: If the array contains a value, returns a boolean value of true.  If 
- *                    the array doesn't contain a value, returns a boolean value of false.
+ * @return {Boolean}: A boolean value of true is returned if the value does occur in the array. If not then a false value 
+ *                    is returned.
  */
- // return values are booleans
+ 
  function contains(array, value) {
     return array.includes(value) ? true : false;
 }
  module.exports.contains = contains;
  
 /**
- * each: Designed to loop over a collection, Array or Object, and applies the 
- *       test function to each value in the collection.
+ * each: The each function takes two parameters, a collection and a callback function. It's purpose is to iterate over the collection 
+ *       and apply the callback function to each element. No return value is returned.
  * 
- * @param {Array, Object} collection: The collection over which to iterate.
- * @param {Function} test: The function to be applied to each value in the collection.
+ * @param {Array, Object} collection: An input array or object that will be acted upon.
+ * @param {Function} action: The callback function that will be applied to each element.
  *                          
  */
- function each(collection, test) {
+ function each(collection, action) {
      if(Array.isArray(collection) === true) {
          for (let i = 0; i < collection.length; i ++) {
-             test(collection[i], i, collection);
+             action(collection[i], i, collection);
          }
      } else if(typeof collection === 'object' &&  collection !== null) {
               for(let key in collection) {
-                  test(collection[key], key,  collection);
+                  action(collection[key], key,  collection);
               }
          }
 }
  module.exports.each = each;
 
-/** unique:  This function removes duplicate values from a collection and retruns a new array 
- *           without the duplicates.
+/** unique:  The unique Function iterates through an input array and returns a new array with all duplicate values removed.
  *
- * @param {Array} array: Input as argument.
+ * @param {Array} array: The input array to scan over.
  *
- * @return {Array}: Returns a collection with elements that were pushed in having no duplicates.
+ * @return {Array}: A new array is returned containing no duplicate values.
  */
   function unique(array) {
       return array.filter((a, b) => array.indexOf(a) === b);
 }
  module.exports.unique = unique;
  
-/** filter: Iterates over elements in the collection to return an array of all the elements that are true.
- *          If the function produces something other than a boolean value, an empty array will be returned.
+/** filter: The filter Function accepts two parameters, an array and a callback function. It scans through an array 
+ *          and applies the callback function to each element of the array. All values that result to true after the function
+ *          has been called on them will be saved and returned in a new array. If the function produces something 
+ *          other than a boolean value, an empty array will be returned.
+ *         
+ * @param {Array} array: The input array that is scanned over.
+ * @param {Function} test: The callback function that will be applied to each value in the array. 
+ *                         It takes three parameters: element, index, and collection.
  * 
- * @param {Array} array: The collection over which to iterate. Input as an argument
- * @param {Function} test: The Function to be applied to each value in the collection. Input as argument.
- *                          It takes three parameters: element, index, and collection.
- * 
- * @return {Array}: myArray: An array will be returned with only the values that past the test (returned true)
+ * @return {Array}: myArray: A new array is returned that contains all the values that have true results after 
+ *                  the callback function has been applied. If a value other than a boolean is produced, elements containing
+ *                  truthy values will be returned in the new array.
  */
  function filter (array, test){
      var myArray = [];
@@ -204,14 +206,15 @@ module.exports.last = last;
  
  module.exports.filter = filter;
  
-/** reject: Reject is the opposite of _.filter and this method returns an array that contains the elements 
- *          of the collection that do not return true.
+/** reject: The reject Function takes two parameters, an array and a callback function. The function is applied to each element
+ *          and all the elements that have false values will be returned in a new array. 
  *
- * @param {Array} array: The collection over which to iterate. Input as an argument.
- * @param {function} test: The Function to be applied to each value in the collection. Input as an argument.
- *                         It take three parameters: element, index, and collection.
+ * @param {Array} array: The array that is scanned over.
+ * @param {function} test: The callback function to be applied to each value in the array.
+ *                         It takes three parameters: element, index, and collection.
  * 
- * @return {Array}: newArray: collection: This will return a new array of elements that passed the test (or returned false)
+ * @return {Array}: newArray: A new array will be returned containing all the elements thats value resulted in false. If the value produced
+ *                            is not a boolean then the elements that have falsey values will be returned.
  *
  */
  function reject (array, test){
@@ -225,14 +228,15 @@ module.exports.last = last;
 }
  module.exports.reject = reject;
 
-/** partition: Partition creates an array of elements split into two groups, an array of arrays.
- *             One array contains all of the truthy values, the other contains all of the falsey values.
+/** partition: The partition Function accepts two parameters, an array and a callback function. This function
+ *             creates an array of two sub arrays. One array will contain all the values that result to true and the 
+ *             other array will contain all of the values that result to false.
  *                            
- * @param {Array} array: The collection over which to iterate. Input as as argument.
- * @param {function} test: The Function to be applied to each value in the collection. Input as an argument.
+ * @param {Array} array: The input array to iterate over.
+ * @param {function} test: The callback function to be applied to each element in the array.
  *
  * @return {Array}: newArray:  An array will be returned that is made up of two sub arrays.
- *                             One array contains all of the truthy values, the other contains
+ *                             One array containing all of the truthy values and the other containing
  *                             all of the falsey values.
  */
  function partition(array, test){
@@ -246,13 +250,14 @@ module.exports.last = last;
 }
  module.exports.partition = partition;
 
-/** map: Map creates a new array of values by running a function on each element in the collection.
+/** map: The map Function accepts two parameters, a collection and a callback function. The collection will be iterated over 
+ *       and the callback function will be applied to each element. The modified values will be returned in a new array.
  *
- * @param {Array, Object} collection: The collection over which to iterate.
- * @param {function} test: The Function to be applied to each value in the collection.
+ * @param {Array, Object} collection: The collection of values that will be scanned over. An array or object can be input.
+ * @param {function} test: The callback function that will be applied to each value in the collection.
  *                         It take three parameters: element, index, and collection.
  * 
- * @return {array} newArray:  A new array will be returned with the new values.
+ * @return {array} newArray:  A new modified array will be returned containing the new values.
  */
  function map (collection, test){
     
@@ -264,14 +269,14 @@ module.exports.last = last;
 }
  module.exports.map = map;
 
-/** pluck: Pluck is used to scan over an array of objects, looking for a common input property,
+/** pluck: The pluck Function is used to iterate over an array of objects, looking for a common input property,
  *         and if the key exists it will push those corresponding values from all the matching objects
- *         to a new array.
+ *         into a new array.
  *
- * @param {Array}: arrObj: The collection over which to iterate. An array of objects. Input as argument
- * @param {property}: prop: Input as argument. The property to search for through the array of objects.
+ * @param {Array}: arrObj: An array of objects is input into this function. 
+ * @param {property}: prop: The property key to scan for through the array of objects.
  *
- * @return {Array}: newArray: An array will be returned that contains the property value of input 
+ * @return {Array}: newArray: An array will be returned that contains the matching property key value of the input 
  *                            property for every object in the array.
  */
  function pluck (arrObj, prop) {
@@ -281,20 +286,21 @@ module.exports.last = last;
 }
  module.exports.pluck = pluck;
 
-/** every: Every is used to check if all elements in a collection return true.
- *         Iteration stops once an element returns false. If the Function argument is not provided,
- *         true will be returned for all the truthy elements and false will be returned if any are falsey.
- *         If Function does not produce a boolean than false will be returned.
+/** every: The every Function takes two parameters, a collection and a callback function. This function is designed to check if every 
+ *         element in the collection contains a true value after being affected by the callback function. The iteration will stop
+ *         once a false value is returned. If no Function parameter is passed in then a true boolean value will be returned for all 
+ *         the truthy elements and false will be returned if any are falsey. If the callback function does not produce a boolean than 
+ *         false will be returned.
  * 
- * @param {Array, Object}: collection: The collection over which to iterate. Input as argument.
- * @param {function}: test: The Function to be applied to each value in the collection. Input as argument.
+ * @param {Array, Object}: collection: The input array or object that will be used for iteration.
+ * @param {function}: test: The callback function that will be applied to each value in the collection.
  *                          It take three parameters for an array: element, index, and collection.
  *                          It take three parameters for an object: current value, current key, collection.
  * 
- * @return {Boolean}:  Returns a boolean value of true if every element in the array is true.
- *                     If just one of the elements returns false, return a boolean value of false.
+ * @return {Boolean}:  A boolean value of true will be returned if every element in the array is true.
+ *                     If just one of the elements returns false, a boolean value of false will be returned.
  */
- //returns a boolean
+ 
  function every(collection,test){
     var newArray = [];
      each(collection,function(element, index, collection){
@@ -313,20 +319,22 @@ module.exports.last = last;
 }
  module.exports.every = every;
 
-/** some: Some will test to see if at least one element is true in the collection. If Function is not
- *        given then true will be returned if at least one element in collection is truthy.
- *        If Function does not produce a boolean than true will be returned for truthy elements,
- *        false otherwise.
+/** some: The some Function will test to see if at least one element is true in the collection. It takes two parameters, a collection and a
+ *        callback function. If at least one of the values has a true value after the callback function has been applied then a true boolean
+ *        value will be returned. If the callback function is not given then true will be returned if at least one element in the collection is truthy.
+ *        If the callback function does not produce a boolean value than true will be returned for truthy elements, and false will be returned otherwise.
  *
- * @param: {Array, Object}: collection: The collection over which to iterate. Input as argument.
- * @param: {function}: func: The Function to be applied to each value in the collection. Input as argument.
+ * @param: {Array, Object}: collection: An object or array can be used as an input collection. This collection will be scanned over.
+ * @param: {function}: func: The callback function that will be applied to each element in the collection.
  *                           It take three parameters for an array: element, index, and collection.
  *                           It take three parameters for an object: current value, current key, collection.
  * 
- * @return {Boolean}: Returns a boolean value of true if element passes the test, if no values result to true then returns false.
+ * @return {Boolean}: A true boolean value will be returned if at least one element results in a true value. If no elements result in true than false 
+ *                    will be returned. If no function is given than true will be returned if at least one element has a truthy value and false
+ *                    will be returned otherwise.
  *
  */
- //returns a boolean
+ 
  function some(collection,func){
     var newArray = [];
      every(collection,function(element, index, collection){
@@ -345,18 +353,21 @@ module.exports.last = last;
 }
  module.exports.some = some;
 
-/** reduce: Reduces a collection to a value which is the result of running each element
- *          in collection through iteration. Each time the function is called, it is supplied
- *          the return value of the previous result. A 'seed' parameter is supplied which represents
- *          the initial value to use for first callback argument. If seed is undefined than initial value will
- *          be the first element in array and then iteration will start from the first instead of the zero index.
+/** reduce: The Reduce Function reduces a collection down to a single value by applying the callback function to each element in the array. 
+ *          It takes three parameters, an array, a callback function, and an optional seed parameter. The optional seed parameter, when supplied, 
+ *          represents the initial value to use for the first callback previous value parameter. The callback function supplied as a parameter takes 
+ *          three parameters as well, a previous value, a current value, and the current index. Each time the callback function is called, it is 
+ *          supplied the return value of the previous result into its previous result parameter. If the seed is undefined than the initial value will 
+ *          be the first element in the array and then iteration will start from the first index instead of the zero index.
  * 
- * @param {Array}: array: The collection over which to iterate. Input as argument.
- * @param {function}: test: The Function to be applied to each value in the collection. Input as argument.
- *                          It takes the parameters: previous result, current, index.
- * @param {Any Value}: seed: Input as argument. Seed is starting value of iteration.
+ * @param {Array}: array: The array to which the callback function will be applied.
+ * @param {function}: test: The callback function that will be applied to each value in the array. It takes the parameters: previous result, 
+ *                          current value, and index.
+ * @param {Any Value}: seed: The optional seed parameter, when supplied, is the initial value used as the first value for the previous result
+ *                           parameter of the callback function. This is ultimately the type of data that will be output.
  *
- * @return {Value}: Returns the value of the final function call.
+ * @return {Value}: The return value is supplied by the final function call. If a seed was applied then this output data type will match the seed 
+ *                  data type.
  */
  function reduce(array, test, seed) { 
         let i;
@@ -375,15 +386,15 @@ module.exports.last = last;
 }
  module.exports.reduce = reduce;
 
-/** extend: Extend copies properties to one target object from at least one other object. 
- *          An indefinite number of objects can be used as arguments to copy to the first 
- *          target object.
+/** extend: The extend Function copies properties from at least one other object to a target object. The target object will be supplied in the first
+ *          parameter. An indefinite number of objects can be used as arguments to copy to the first target object. If a property value already exists 
+ *          in the target object then the value will be updated with the values from the other objects.
  *
- * @param: {Object}: obj1: The target object to be copied to. Input as argument.
- * @param: {Object}: obj2: The object to be copied from. Input as argument.
- * @param: {Object}: ...theArgs: Indefinite number of objects can be used.
+ * @param: {Object}: obj1: This is the target object that will be copied to.
+ * @param: {Object}: obj2: This is the object that will be copied from.
+ * @param: {Object}: ...theArgs: This represents the indefinite number of objects that can be used.
  *
- * @return {object}: obj1: Returns the updated object.
+ * @return {object}: obj1: An updated object with new property values will be returned.
  */
  function extend(obj1, obj2, ...theArgs) {
        Object.assign(obj1, obj2);
