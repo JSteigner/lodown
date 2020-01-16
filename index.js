@@ -1,27 +1,6 @@
-'use strict';
-
 // YOU KNOW WHAT TO DO //
 
-/**
- * each: Designed to loop over a collection, Array or Object, and applies the 
- * action Function to each value in the collection.
- * 
- * @param {Array or Object} collection: The collection over which to iterate.
- * @param {Function} action: The Function to be applied to each value in the 
- * collection
- */
-function each(collection, test) {
-    if(Array.isArray(collection)) {
-        for(var i = 0; i < collection.length; i++) {
-            test(collection[i], i, collection);
-        }
-    } else {
-        for (var key in collection) {
-            test(collection[key], key, collection);
-        }
-    }
-}
-module.exports.each = each;
+
 /**
  * identity: The identity Function returns an input value unaltered. 
  * 
@@ -37,8 +16,7 @@ module.exports.identity = identity;
 // This makes the arguments variable behave the way we want it to and a few
 // other things. For more info:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
-'use strict';
-var _ = {};
+
 
 
 /** typeOf: The typeOf Function will accept any data type input and return a string of that data type.
@@ -65,7 +43,7 @@ var _ = {};
  * @param {Array} array: An optional input array that will be scanned over. This Array may not exist or have a value.
  * @param {Number}: firstNum: An input number that represents the first number of elements that will be returned.
  *
- * @return {Value}: arrayResult:  The element values that correspond to the first input number from the beginning of array will be returned.
+ * @return {Value}: arrayResult:  The elements that correspond to the first input number from the beginning of array will be returned.
  */
  function first(array, firstNum){
     let arrayResult = [];
@@ -113,21 +91,21 @@ var _ = {};
 }
 module.exports.last = last;
 
-/** indexOf: The indexOf Function takes two parameters, an input array and a string value. It is designed to return the index of the first
- *           occurrence of the input string value in the array. Multiple occurrences of the value is not an issue because this function returns
+/** indexOf: The indexOf Function takes two parameters, an input array and a value. It is designed to return the index of the first
+ *           occurrence of the input value in the array. Multiple occurrences of the value is not an issue because this function returns
  *           the index at the first occurrence. If the value does not exist in the array then -1 will be returned.
  * 
  * @param {Array}: array: The input array that will be scanned over.
- * @param {string}: strVal: A string value to look for in array.
+ * @param {Any Value}: val: A value to look for in array.
  * 
- * @return {Number}: The index of the first occurrence of the string value found in the array will be returned. If the string value is not found
+ * @return {Number}: The index of the first occurrence of the value found in the array will be returned. If the value is not found
  *                   negative one will be returned.
  *                   
  */
- function indexOf(array, strVal) {
+ function indexOf(array, val) {
     
      for(let i = 0; i < array.length; i++) {
-         if(array[i] === strVal) {
+         if(array[i] === val) {
              return i;
          }
      } return -1;
@@ -181,23 +159,23 @@ module.exports.last = last;
 }
  module.exports.unique = unique;
  
-/** filter: The filter Function accepts two parameters, an array and a callback function. It scans through an array 
- *          and applies the callback function to each element of the array. All values that result to true after the function
+/** filter: The filter Function accepts two parameters, a collection and a callback function. It scans through the collection 
+ *          and applies the callback function to each element in the collection. All values that result to true after the function
  *          has been called on them will be saved and returned in a new array. If the function produces something 
  *          other than a boolean value, an empty array will be returned.
  *         
- * @param {Array} array: The input array that is scanned over.
- * @param {Function} test: The callback function that will be applied to each value in the array. 
+ * @param {Array or Object} collection: The input collection that is scanned over.
+ * @param {Function} test: The callback function that will be applied to each element in the collection. 
  *                         It takes three parameters: element, index, and collection.
  * 
  * @return {Array}: myArray: A new array is returned that contains all the values that have true results after 
  *                  the callback function has been applied. If a value other than a boolean is produced, elements containing
  *                  truthy values will be returned in the new array.
  */
- function filter (array, test){
+ function filter (collection, test){
      var myArray = [];
-     each(array, function(element, index, array){
-         if(test(element, index, array)){
+     each(collection, function(element, index, collection){
+         if(test(element, index, collection)){
              myArray.push(element);
          }
      });
@@ -206,21 +184,21 @@ module.exports.last = last;
  
  module.exports.filter = filter;
  
-/** reject: The reject Function takes two parameters, an array and a callback function. The function is applied to each element
+/** reject: The reject Function takes two parameters, a collection and a callback function. The function is applied to each element
  *          and all the elements that have false values will be returned in a new array. 
  *
- * @param {Array} array: The array that is scanned over.
- * @param {function} test: The callback function to be applied to each value in the array.
+ * @param {Array or Object} collection: The input collection that is scanned over.
+ * @param {function} test: The callback function to be applied to each element in the collection.
  *                         It takes three parameters: element, index, and collection.
  * 
  * @return {Array}: newArray: A new array will be returned containing all the elements thats value resulted in false. If the value produced
  *                            is not a boolean then the elements that have falsey values will be returned.
  *
  */
- function reject (array, test){
+ function reject (collection, test){
     let newArray = [];
-    filter(array, function(element, index, array) {
-        if(!test(element, index, array)){
+    filter(collection, function(element, index, collection) {
+        if(!test(element, index, collection)){
             newArray.push(element);
         }
     });
@@ -242,8 +220,8 @@ module.exports.last = last;
  function partition(array, test){
     var newArray = [];
     if (filter(array,test)){
-        newArray.push(_.filter(array,test));
-        newArray.push(_.reject(array,test));
+        newArray.push(array.filter(test));
+        newArray.push(array.reject(test));
     }
     return newArray;
    
@@ -274,14 +252,14 @@ module.exports.last = last;
  *         into a new array.
  *
  * @param {Array}: arrObj: An array of objects is input into this function. 
- * @param {property}: prop: The property key to scan for through the array of objects.
+ * @param {String}: key: The property key to scan for through the array of objects.
  *
  * @return {Array}: newArray: An array will be returned that contains the matching property key value of the input 
- *                            property for every object in the array.
+ *                            key for every object in the array.
  */
- function pluck (arrObj, prop) {
+ function pluck (arrObj, key) {
     return map(arrObj, function(value, index, collection){
-        return value[prop];
+        return value[key];
     });
 }
  module.exports.pluck = pluck;
