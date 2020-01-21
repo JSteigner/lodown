@@ -37,13 +37,17 @@ module.exports.identity = identity;
  module.exports.typeOf = typeOf;
 
 /** first: The first Function will return the first number of elements that correspond to an input number.
- *         If the input number is greater than the length of the array then the array will be returned. If the input number is 
- *         negative or not a number then an empty array will be returned.
+ *         If the input number is greater than the length of the array then the whole array will be returned. If the input number is 
+ *         negative or if the input array is not an array, an empty array will be returned. If the input number is not a number or given then 
+ *         the first element will be returned.
  * 
  * @param {Array} array: An optional input array that will be scanned over. This Array may not exist or have a value.
  * @param {Number}: firstNum: An input number that represents the first number of elements that will be returned.
  *
- * @return {Value}: arrayResult:  The elements that correspond to the first input number from the beginning of array will be returned.
+ * @return {Array}: arrayResult:  The elements that correspond to the first input number from the beginning of array will be returned as an array.
+ *                                If the input number is not a number or given then the first element will be returned. If the input number is negative
+ *                                or if the input array is not an array then an empty array will be returned. If the input number is greater than the 
+ *                                length of the array then the whole array will be returned.
  */
  function first(array, firstNum){
     let arrayResult = [];
